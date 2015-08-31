@@ -2,10 +2,10 @@
 
 //module to parse BBCodes in a post. This is not my code, I merely customised
   //code I found here: *******
-var bbtest = require('./10_bbparse');
+var bbtest = require('./bbparse');
 
 //custom module to convert time to a human-readable form.
-var timeConvert = require('./11_time-convert');
+var timeConvert = require('./time-convert');
 
 var seneca = require('seneca')()
 
