@@ -2,16 +2,27 @@
 
 //module to parse BBCodes in a post. This is not my code, I merely customised
   //code I found here: *******
-var bbtest = require('./bbparse');
+var bbtest = require('./10_bbparse');
 
 //custom module to convert time to a human-readable form.
-var timeConvert = require('./time-convert');
+var timeConvert = require('./11_time-convert');
 
 var seneca = require('seneca')()
 
 seneca.listen(10103) //requests from Hapi REST
-seneca.client(10101) //requests to Directory Services
-  var thread = {};
+
+var thread = {};
+
+//discovery
+seneca.add({cmd:'config'}, function (msg, response) {
+  msg.data.forEach(function (item) {
+    if (item.name === 'Directory') {
+      seneca.client({host:item.address, port:10101});
+    }
+  })
+  response(null, msg.data);
+});
+
 
 seneca.add({role:"get",cmd:"thread"}, function( msg, respond) {
 //console.log('get thread request', msg);
